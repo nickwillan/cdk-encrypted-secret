@@ -1,7 +1,7 @@
 import { mockClient } from 'aws-sdk-client-mock';
 import { KMSClient } from '@aws-sdk/client-kms';
 import { SecretsManager } from '@aws-sdk/client-secrets-manager';
-import { handler } from '../../../src/encrypted-secret/lambda/index';
+import { handler } from '../../src/lambda/index';
 import { DecryptCommand } from '@aws-sdk/client-kms';
 import { PutSecretValueCommand } from '@aws-sdk/client-secrets-manager';
 

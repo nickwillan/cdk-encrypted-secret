@@ -11,10 +11,12 @@ The `cdk-encrypted-secret` is set of CDK (AWS Cloud Development Kit) Constructs 
 
 This CDK Construct creates an AWS Secrets Manager Secret from a KMS (Key Management Service) encrypted CipherText. This construct simplifies the process of creating and managing secrets in AWS by automating the decryption and storage of secrets, during the application deployment.
 
+Managing Secrets in AWS can be a complext task. By securely storing secrets in your repository, you can ensure that your secrets are safe and auditable. This construct is designed to be used in a CI/CD pipeline, where the secrets are decrypted and stored in AWS Secrets Manager during the deployment process. While generally, storing secrets in your repository is not recommended, by encrypting the secrets with a KMS Key, you can ensure that the secrets are safe and secure, even if your source code is compromised.
+
 ## Table of Contents
 
 - [CDK Encrypted Secret (cdk-encrypted-secret)](#cdk-encrypted-secret-cdk-encrypted-secret)
-    - [EncryptedSecret](#encryptedsecret)
+  - [EncryptedSecret](#encryptedsecret)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Usage](#usage)
@@ -30,21 +32,20 @@ This CDK Construct creates an AWS Secrets Manager Secret from a KMS (Key Managem
 ## Installation
 
 ```bash
-npm i @nick-willan/cdk-encrypted-secret
+npm i cdk-encrypted-secret --save-dev
 ```
 
 ## Usage
 
-In your CDK application, you can create an `EncryptedSecret` using the a KMS encrypted Cipher text, KMS Key Id (from prerequisite), and SecretProps:
+In your CDK application, you can create an `EncryptedSecret` using the a KMS encrypted Ciphertext, KMS Key Id (from prerequisite), and SecretProps (or an existing Secret object).:
 
 ```typescript
-const mySecret = new EncryptedSecret(this, 'my-secret', {
+const mySecret = new EncryptedSecret(this, 'MySecret', {
   secretProps: {
-    description: 'A Super Secret Secret',
-    encryptionKey: kmsSecretKey, // Optional, if not provided, an AWS Managed Key will be used
+    description: 'My Secret description',
   },
-  cipherText: 'AQICAHhFR8...',
-  kmsKeyArn: 'arn:aws:kms:us-west-2:012345678901:key/483291fd-92ad-4dde-af8b-e4203b013258',
+  ciphertextBlob: 'AQICAHhFR8...',
+  keyId: 'arn:aws:kms:us-west-2:012345678901:key/483291fd-92ad-4dde-af8b-e4203b013258',
 });
 ```
 
@@ -62,9 +63,10 @@ myOtherCDKObject.node.addDependency(mySecret.secret);
 
 The `EncryptedSecret` supports the following configuration options in `EncryptedSecretProps`:
 
-- secretProps: [SecretProps](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_secretsmanager.SecretProps.html) - The SecretProps for the Secret to be created.
-- cipherText: string - The cipherText to be decrypted and stored in the Secret.
-- kmsKeyArn: string - The KMS Key ARN to be used to decrypt the cipherText.
+- secretProps: [SecretProps](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_secretsmanager.SecretProps.html) - The SecretProps for the Secret to be created. If `existingSecretObj` is provided, this property is ignored.
+- existingSecretObj: [ISecret](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_secretsmanager.ISecret.html) - An existing Secret object to be used instead of creating a new Secret.
+- ciphertextBlob: string - The cipherText to be decrypted and stored in the Secret.
+- keyId: string - The KMS Key ARN to be used to decrypt the cipherText.
 
 ## Prerequisite
 
@@ -130,26 +132,13 @@ This construct creates a Secret, a Singleton Lambda and an AWSCustomResource to 
 
     e.g. `mySecret.secret`
 
-4.  **Do I have to provide a KMS Key for my Secret in AWS?**
+4.  **Why is storing the encrypted secret in the repository better than creating a CDK Secret with a dummy-value, and setting the value manually?**
 
-    For compliance reasons, it may is required that all Secrets in AWS are encrypted with a CMK, not an AWS Managed Key.
-    To create a KMS CMK in your application, add the following to your stack:
+    By storing the encrypted secret in the repository, you can ensure that the secret is auditable and application deployment is repeatable. The value of the Secret will be set during the deployment process, allowing your application to work immedately after deployment. This is especially useful in a disaster recovery scenario, where you can deploy your application without needing to manually set the secret value after deployment. By using a pull-request to update the secret, the rotation of the secret can be audited and approved by the team.
 
-    ```typescript
-    // Create a KMS Key for the Secret Manager Secret created below
-    const kmsSecretKey = new Key(this, `AppSecretEncryptionKey`, {
-      alias: 'alias/my-key',
-      enableKeyRotation: true, // Rotate the key every year
-      removalPolicy: RemovalPolicy.DESTROY, // Remove the key when the stack is destroyed, Retain is default
-      pendingWindow: Duration.days(7), // Allow 7 days for key deletion
-    });
-    ```
+5.  **Is the secret value ever logged or sent to any other AWS Service?**
 
-    **Note:** You may use the same CMK for multiple secrets.
-
-5.  **Why not use the CMK that was used to encrypt the secret, for the Secret's CMK?**
-
-    Ideally, your production application doesn't rely on any KMS key used for the cdk deloyment account for anything other than deployment. Doing so would have a strange runtime dependency and also may have cross region dependency.
+    No. The secret value is only decrypted within the Lambda function, and is never logged or sent to any other AWS Service. The lambda function will execute within your AWS Account, and the decrypted value will be set directly into the Secret. This project will remain open-source, and the code can be reviewed to ensure that the secret value is not sent to any other service.
 
 ## Contributing
 

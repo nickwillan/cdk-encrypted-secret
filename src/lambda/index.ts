@@ -22,6 +22,7 @@ class SecretSettingLambda {
   /// Hander decrypts the secret and sets it in Secrets Manager
   async handler(props: SecretSetProps): Promise<void> {
     try {
+      console.log('Decrypting ciphertextBlob');
       // Decrypt Secret
       const response = await this.kmsClient.send(
         new DecryptCommand({
@@ -30,6 +31,7 @@ class SecretSettingLambda {
         }),
       );
 
+      console.log('Setting secret in Secrets Manager');
       // Set Secret in Secrets Manager
       await this.secretsClient.putSecretValue({
         SecretId: props.secretArn,
@@ -39,6 +41,7 @@ class SecretSettingLambda {
       console.log(error);
       throw error;
     }
+    console.log('Secret decrypted and set successfully');
   }
 }
 export const handler = (event: SecretSetProps) => new SecretSettingLambda().handler(event);
