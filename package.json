@@ -1,6 +1,6 @@
 {
   "name": "cdk-encrypted-secret",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "CDK Construct that creates a Secret and sets the value based on an encrypted CipherText.",
   "main": "./dist/index.js",
   "packageManager": "pnpm@8.15.4",
