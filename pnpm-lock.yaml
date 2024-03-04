@@ -33,7 +33,7 @@ devDependencies:
     version: 7.0.2(eslint@8.57.0)(typescript@5.3.3)
   aws-cdk-lib:
     specifier: ^2.130.0
-    version: 2.130.0(constructs@10.3.0)
+    version: 2.131.0(constructs@10.3.0)
   aws-sdk-client-mock:
     specifier: ^3.0.1
     version: 3.0.1
@@ -2228,8 +2228,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /aws-cdk-lib@2.130.0(constructs@10.3.0):
-    resolution: {integrity: sha512-yK7ibePipdjlI4AFM94fwwtsCkmpWJ0JFZTMPahahC/3Pxe/BA/nnI/4Namvl5QPxW5QlU0xQYU7cywioq3RQg==}
+  /aws-cdk-lib@2.131.0(constructs@10.3.0):
+    resolution: {integrity: sha512-9XLgiTgY+q0S3K93VPeJO0chIN8BZwZ3aSrILvF868Dz+0NTNrD2m5M0xGK5Rw0uoJS+N+DvGaz/2hLAiVqcBw==}
     engines: {node: '>= 14.15.0'}
     peerDependencies:
       constructs: ^10.0.0
