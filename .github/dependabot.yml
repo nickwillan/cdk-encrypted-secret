@@ -5,3 +5,9 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
+    groups:
+      production-dependencies:
+        applies-to: version-updates
+        update-types:
+          - 'patch'
+          - 'minor'
