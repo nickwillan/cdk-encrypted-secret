@@ -5,7 +5,7 @@
 [![AWS: CDK Construct](https://img.shields.io/badge/aws-cdk_construct-FF9900?&logo=AmazonAWS)](.)
 [![Test Coverage](https://img.shields.io/badge/coverage-100%25-22BC22?style=flat&logo=jest)](.)
 
-The `cdk-encrypted-secret` is set of CDK (AWS Cloud Development Kit) Constructs that allows users to encrypt secrets for their application and store it in their code repository.
+The `cdk-encrypted-secret` is a CDK (AWS Cloud Development Kit) Construct that allows users to encrypt secrets for their application and securely store it in their code repository.
 
 ### EncryptedSecret
 
