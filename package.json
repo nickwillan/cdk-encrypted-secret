@@ -1,6 +1,6 @@
 {
   "name": "cdk-encrypted-secret",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "CDK Construct that creates a Secret and sets the value based on an encrypted CipherText.",
   "main": "./dist/index.js",
   "packageManager": "pnpm@9.2.0",
@@ -12,7 +12,7 @@
     "build": "tsc && esbuild src/lambda/index.ts --bundle --platform=node --target=node20 --outfile=dist/lambda/index.js",
     "prettier": "prettier --write './{src,test,checkov}/**/*.{js,ts,tsx,jsx}'",
     "test": "jest --coverage",
-    "publish-package": "pnpm run build && npm publish --access public"
+    "publish-package": "pnpm run build && pnpm publish --access public"
   },
   "repository": {
     "type": "git",
