@@ -1,8 +1,8 @@
 import { Stack } from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
-import { EncryptedSecret } from '../src/index';
 import { Key } from 'aws-cdk-lib/aws-kms';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
+import { EncryptedSecret } from '../src/index';
 
 let stack: Stack;
 
