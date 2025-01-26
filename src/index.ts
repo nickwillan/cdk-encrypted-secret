@@ -1,29 +1,28 @@
+import * as crypto from 'crypto';
+import * as path from 'path';
+import { ARN, parse, validate } from '@aws-sdk/util-arn-parser';
+import { RemovalPolicy, Stack } from 'aws-cdk-lib';
 import { PolicyStatement } from 'aws-cdk-lib/aws-iam';
 import { Architecture, Code, Runtime, SingletonFunction } from 'aws-cdk-lib/aws-lambda';
 import { LogGroup, RetentionDays } from 'aws-cdk-lib/aws-logs';
+import { Secret, SecretProps } from 'aws-cdk-lib/aws-secretsmanager';
 import { AwsCustomResource, AwsCustomResourcePolicy, PhysicalResourceId } from 'aws-cdk-lib/custom-resources';
 import { Construct } from 'constructs';
-import * as path from 'path';
-import * as crypto from 'crypto';
-import { RemovalPolicy, Stack } from 'aws-cdk-lib';
-import { Secret, SecretProps } from 'aws-cdk-lib/aws-secretsmanager';
-import { ARN, parse, validate } from '@aws-sdk/util-arn-parser';
 
 /**
- * EncryptedSecretProps defines the properties for the EncryptedSecret construct
+ * EncryptedSecretProps defines the properties for the EncryptedSecret construct.
  *
  * @interface EncryptedSecretProps
- * @member {aws-cdk-lib/aws-secretsmanager » SecretProps} secretProps is the SecretProps for the Secret to be created and set the decrypted value in.
- * @member {aws-cdk-lib/aws-secretsmanager » Secret} existingSecretObj is the existing Secret to be used to set the decrypted value in.
- * @member {string} ciphertextBlob is the ciphertext to be decrypted and stored in the Secret.
- * @member {string} keyId is the KMS Key ARN to be used to decrypt the ciphertext.
+ * @property {SecretProps} [secretProps] - The SecretProps for the Secret to be created and set the decrypted value in.
+ * @property {Secret} [existingSecretObj] - The existing Secret to be used to set the decrypted value in.
+ * @property {string} ciphertextBlob - The ciphertext to be decrypted and stored in the Secret.
+ * @property {string} keyId - The KMS Key ARN to be used to decrypt the ciphertext.
  */
-
 export interface EncryptedSecretProps {
-  secretProps?: SecretProps;
-  existingSecretObj?: Secret;
-  ciphertextBlob: string;
-  keyId: string;
+  readonly secretProps?: SecretProps;
+  readonly existingSecretObj?: Secret;
+  readonly ciphertextBlob: string;
+  readonly keyId: string;
 }
 
 /**
@@ -32,9 +31,9 @@ export interface EncryptedSecretProps {
  *
  * @class EncryptedSecret
  * @extends {Construct}
- * @member {Construct} scope is the scope of the construct.
- * @member {string} id is the id of the construct.
- * @member {EncryptedSecretProps} props is the EncryptedSecretProps for the EncryptedSecret construct.
+ * @param {Construct} scope - The scope of the construct.
+ * @param {string} id - The id of the construct.
+ * @param {EncryptedSecretProps} props - The EncryptedSecretProps for the EncryptedSecret construct.
  */
 export class EncryptedSecret extends Construct {
   public secret: Secret;
@@ -143,10 +142,6 @@ export class EncryptedSecret extends Construct {
       },
       policy: AwsCustomResourcePolicy.fromSdkCalls({
         resources: [decryptSecretFunction.functionArn],
-      }),
-      logGroup: new LogGroup(this, 'CustomResourceSecretLambdaInvokeLogGroup', {
-        removalPolicy: RemovalPolicy.DESTROY,
-        retention: RetentionDays.ONE_WEEK,
       }),
     });
 
