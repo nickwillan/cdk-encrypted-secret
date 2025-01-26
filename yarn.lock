@@ -4638,7 +4638,7 @@ jsii-reflect@^1.106.0:
     oo-ascii-tree "^1.106.0"
     yargs "^16.2.0"
 
-jsii-rosetta@~5.7.2:
+jsii-rosetta@5.7.x:
   version "5.7.2"
   resolved "https://registry.yarnpkg.com/jsii-rosetta/-/jsii-rosetta-5.7.2.tgz#1b2a9b6116ee2d8447f652ae1e6e7dd3dcf3b465"
   integrity sha512-03OVxIEj7aI+yTkO0TT8Jg6PgKOYnceTka6ZN1CMScItpJJt+JA91Qr/4G/0DYQzfBwTORoctbF4uJksQIDvYQ==
@@ -4657,7 +4657,7 @@ jsii-rosetta@~5.7.2:
     workerpool "^6.5.1"
     yargs "^17.7.2"
 
-jsii@~5.7.0, jsii@~5.7.2:
+jsii@5.7.x, jsii@~5.7.0:
   version "5.7.4"
   resolved "https://registry.yarnpkg.com/jsii/-/jsii-5.7.4.tgz#4d7e7f5d7257789767b7dacab832e0fe7d9cec51"
   integrity sha512-L2JWl4ETXjXCe25t8vg0lFQ0ycqtMuGDd0j0kSxKNFO/g19c3mW5wcClPZF1YD1fG5VIHG4t9ZGJ8ZU8H7tZMg==
