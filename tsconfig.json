@@ -28,10 +28,10 @@
     "stripInternal": false,
     "target": "es2020",
     "composite": false,
-    "tsBuildInfoFile": "lib\\tsconfig.tsbuildinfo"
+    "tsBuildInfoFile": "lib/tsconfig.tsbuildinfo"
   },
   "include": [
-    "src\\**\\*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "node_modules"
