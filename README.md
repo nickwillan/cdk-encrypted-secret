@@ -1,4 +1,4 @@
-# CDK Encrypted Secret (cdk-encrypted-secret)
+# CDK Encrypted Secret
 
 [![State: GA](https://img.shields.io/badge/state-GA-22BC22?logo=npm)](https://github.com/nickwillan/cdk-secret/pkgs/npm/cdk-secret)
 [![Maintainer: Nick Willan](https://img.shields.io/badge/maintainer-%40nick_willan-0046FF?&logo=github)](https://github.com/nickwillan)
@@ -11,7 +11,7 @@ The `cdk-encrypted-secret` is a CDK (AWS Cloud Development Kit) Construct that a
 
 This CDK Construct creates an AWS Secrets Manager Secret from a KMS (Key Management Service) encrypted CipherText. This construct simplifies the process of creating and managing secrets in AWS by automating the decryption and storage of secrets, during the application deployment.
 
-Managing Secrets in AWS can be a complext task. By securely storing secrets in your repository, you can ensure that your secrets are safe and auditable. This construct is designed to be used in a CI/CD pipeline, where the secrets are decrypted and stored in AWS Secrets Manager during the deployment process. While generally, storing secrets in your repository is not recommended, by encrypting the secrets with a KMS Key, you can ensure that the secrets are safe and secure, even if your source code is compromised.
+Managing Secrets in AWS can be a complex task. By securely storing secrets in your repository, you can ensure that your secrets are safe and auditable. This construct is designed to be used in a CI/CD pipeline, where the secrets are decrypted and stored in AWS Secrets Manager during the deployment process. While generally, storing secrets in your repository is not recommended, by encrypting the secrets with a KMS Key, you can ensure that the secrets are safe and secure, even if your source code is compromised.
 
 ## Table of Contents
 
@@ -142,6 +142,6 @@ This construct creates a Secret, a Singleton Lambda and an AWSCustomResource to 
 
 ## Contributing
 
-We :heart: contributions!
+I :heart: contributions!
 
 Please refer to the [Contributing Guide](contributing.md)
