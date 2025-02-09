@@ -47,7 +47,7 @@ export class EncryptedSecret extends Construct {
     // Parse keyId as ARN
     const kmsKey: ARN = parse(props.keyId);
 
-    // Ensure ciphertextBlob is non empty
+    // Ensure ciphertextBlob is non-empty
     if (!props.ciphertextBlob.length) {
       throw new Error('ciphertextBlob cannot be empty');
     }

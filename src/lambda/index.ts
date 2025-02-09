@@ -6,6 +6,11 @@ interface SecretSetProps {
   cipherText: string;
   kmsKeyArn: string;
 }
+
+function isNullOrEmpty(value: string | undefined | null): boolean {
+  return value === undefined || value === null || value.trim() === '';
+}
+
 class SecretSettingLambda {
   private secretsClient: SecretsManager;
   private kmsClient: KMSClient;
@@ -19,8 +24,12 @@ class SecretSettingLambda {
     });
   }
 
-  /// Hander decrypts the secret and sets it in Secrets Manager
+  /// Handler decrypts the secret and sets it in Secrets Manager
   async handler(props: SecretSetProps): Promise<void> {
+    if (isNullOrEmpty(props.secretArn) || isNullOrEmpty(props.cipherText) || isNullOrEmpty(props.kmsKeyArn)) {
+      throw new Error('Missing required properties: secretArn, cipherText, and kmsKeyArn are required.');
+    }
+
     try {
       console.log('Decrypting ciphertextBlob');
       // Decrypt Secret
@@ -38,7 +47,7 @@ class SecretSettingLambda {
         SecretString: new TextDecoder().decode(response.Plaintext),
       });
     } catch (error) {
-      console.log(error);
+      console.error('Error decrypting and setting secret:', error);
       throw error;
     }
     console.log('Secret decrypted and set successfully');
