@@ -73,3 +73,24 @@ it('should catch and throw Secrets Manager error', async () => {
 
   await expect(handler(lambdaEvent)).rejects.toThrow('Error putting secret');
 });
+
+it('should throw error for invalid input', async () => {
+  const invalidEvent = {
+    secretArn: '',
+    cipherText: '',
+    kmsKeyArn: '',
+  };
+
+  await expect(handler(invalidEvent)).rejects.toThrow();
+});
+
+it('should handle empty ciphertext', async () => {
+  const emptyCiphertextEvent = {
+    ...lambdaEvent,
+    cipherText: '',
+  };
+
+  await expect(handler(emptyCiphertextEvent)).rejects.toThrow(
+    'Missing required properties: secretArn, cipherText, and kmsKeyArn are required.',
+  );
+});

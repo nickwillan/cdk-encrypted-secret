@@ -84,3 +84,34 @@ it('Fails when cipherText is not provided', () => {
     });
   }).toThrow(Error);
 });
+
+it('create a EncryptedSecret with minimal required properties', () => {
+  // WHEN
+  new EncryptedSecret(stack, 'MyConstruct', {
+    ciphertextBlob: 'foobar',
+    keyId: 'arn:aws:kms:us-west-2:012345678901:key/483291fd-92ad-4dde-af8b-e4203b013258',
+  });
+
+  // THEN
+  Template.fromStack(stack).hasResourceProperties('Custom::AWS', {});
+});
+
+it('create a EncryptedSecret with all optional properties', () => {
+  // WHEN
+  new EncryptedSecret(stack, 'MyConstruct', {
+    ciphertextBlob: 'foobar',
+    keyId: 'arn:aws:kms:us-west-2:012345678901:key/483291fd-92ad-4dde-af8b-e4203b013258',
+    secretProps: {
+      description: 'ABCD',
+      encryptionKey: new Key(stack, 'MyKey'),
+      generateSecretString: {
+        secretStringTemplate: JSON.stringify({ username: 'user' }),
+        generateStringKey: 'password',
+      },
+    },
+  });
+
+  // THEN
+  Template.fromStack(stack).hasResourceProperties('Custom::AWS', {});
+  Template.fromStack(stack).hasResourceProperties('AWS::SecretsManager::Secret', { Description: 'ABCD' });
+});
