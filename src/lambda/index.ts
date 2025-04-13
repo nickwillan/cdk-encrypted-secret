@@ -4,7 +4,7 @@ import { SecretsManager } from '@aws-sdk/client-secrets-manager';
 interface SecretSetProps {
   secretArn: string;
   cipherText: string;
-  kmsKeyArn: string;
+  keyId: string;
 }
 
 function isNullOrEmpty(value: string | undefined | null): boolean {
@@ -26,8 +26,8 @@ class SecretSettingLambda {
 
   /// Handler decrypts the secret and sets it in Secrets Manager
   async handler(props: SecretSetProps): Promise<void> {
-    if (isNullOrEmpty(props.secretArn) || isNullOrEmpty(props.cipherText) || isNullOrEmpty(props.kmsKeyArn)) {
-      throw new Error('Missing required properties: secretArn, cipherText, and kmsKeyArn are required.');
+    if (isNullOrEmpty(props.secretArn) || isNullOrEmpty(props.cipherText) || isNullOrEmpty(props.keyId)) {
+      throw new Error('Missing required properties: secretArn, cipherText, and keyId are required.');
     }
 
     try {
@@ -36,7 +36,7 @@ class SecretSettingLambda {
       const response = await this.kmsClient.send(
         new DecryptCommand({
           CiphertextBlob: Buffer.from(props.cipherText, 'base64'),
-          KeyId: props.kmsKeyArn,
+          KeyId: props.keyId,
         }),
       );
 

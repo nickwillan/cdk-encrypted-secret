@@ -8,7 +8,7 @@ const SECRET = 'This is a secret';
 const lambdaEvent = {
   secretArn: 'arn:secret-arn',
   cipherText: 'VGhpcyBpcyBhIHNlY3JldA==',
-  kmsKeyArn: 'arn:kms-key-arn',
+  keyId: 'arn:kms-key-arn',
 };
 
 const kmsMock = mockClient(KMSClient);
@@ -35,7 +35,7 @@ it('should decrypt and put the secret', async () => {
   // Verify that the KMS client was called with the correct parameters
   expect(kmsMock.calls()[0].firstArg.input).toEqual({
     CiphertextBlob: Buffer.from(lambdaEvent.cipherText, 'base64'),
-    KeyId: lambdaEvent.kmsKeyArn,
+    KeyId: lambdaEvent.keyId,
   });
 
   // Verify that the decrypted secret is returned
@@ -78,7 +78,7 @@ it('should throw error for invalid input', async () => {
   const invalidEvent = {
     secretArn: '',
     cipherText: '',
-    kmsKeyArn: '',
+    keyId: '',
   };
 
   await expect(handler(invalidEvent)).rejects.toThrow();
@@ -91,6 +91,6 @@ it('should handle empty ciphertext', async () => {
   };
 
   await expect(handler(emptyCiphertextEvent)).rejects.toThrow(
-    'Missing required properties: secretArn, cipherText, and kmsKeyArn are required.',
+    'Missing required properties: secretArn, cipherText, and keyId are required.',
   );
 });
