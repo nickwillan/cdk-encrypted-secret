@@ -17,12 +17,14 @@ import { Construct } from 'constructs';
  * @property {Secret} [existingSecretObj] - The existing Secret to be used to set the decrypted value in.
  * @property {string} ciphertextBlob - The ciphertext to be decrypted and stored in the Secret.
  * @property {string} keyId - The KMS Key ARN to be used to decrypt the ciphertext.
+ * @property {RetentionDays} [logRetentionDays] - The retention days for the log group (optional, default is ONE_WEEK).
  */
 export interface EncryptedSecretProps {
   readonly secretProps?: SecretProps;
   readonly existingSecretObj?: Secret;
   readonly ciphertextBlob: string;
   readonly keyId: string;
+  readonly logRetentionDays?: RetentionDays;
 }
 
 /**
@@ -59,6 +61,7 @@ export class EncryptedSecret extends Construct {
       // create a secret with the secretProps provided
       this.secret = new Secret(this, 'Secrets', props.secretProps);
     }
+
     // Create the Lambda Function to decrypt the ciphertext and store the value in the Secret
     const decryptSecretFunction = new SingletonFunction(this, 'DecryptSecretFunction', {
       lambdaPurpose: 'DecryptSecret',
@@ -73,7 +76,7 @@ export class EncryptedSecret extends Construct {
       },
       logGroup: new LogGroup(this, 'DecryptSecretFunctionLogGroup', {
         removalPolicy: RemovalPolicy.DESTROY,
-        retention: RetentionDays.ONE_WEEK,
+        retention: props.logRetentionDays ?? RetentionDays.ONE_WEEK,
       }),
     });
 
@@ -142,6 +145,10 @@ export class EncryptedSecret extends Construct {
       },
       policy: AwsCustomResourcePolicy.fromSdkCalls({
         resources: [decryptSecretFunction.functionArn],
+      }),
+      logGroup: new LogGroup(this, 'CustomResourceSecretLambdaInvokeLogGroup', {
+        removalPolicy: RemovalPolicy.DESTROY,
+        retention: props.logRetentionDays ?? RetentionDays.ONE_WEEK,
       }),
     });
 

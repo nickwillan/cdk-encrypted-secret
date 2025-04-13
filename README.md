@@ -15,7 +15,7 @@ Managing Secrets in AWS can be a complex task. By securely storing secrets in yo
 
 ## Table of Contents
 
-- [CDK Encrypted Secret (cdk-encrypted-secret)](#cdk-encrypted-secret-cdk-encrypted-secret)
+- [CDK Encrypted Secret](#cdk-encrypted-secret)
   - [EncryptedSecret](#encryptedsecret)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
@@ -67,7 +67,7 @@ The `EncryptedSecret` supports the following configuration options in `Encrypted
 - existingSecretObj: [ISecret](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_secretsmanager.ISecret.html) - An existing Secret object to be used instead of creating a new Secret.
 - ciphertextBlob: string - The cipherText to be decrypted and stored in the Secret.
 - keyId: string - The KMS Key ARN to be used to decrypt the cipherText.
-
+- logRetentionDays: [aws-cdk-lib.aws_logs.RetentionDays](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_logs.RetentionDays.html) (optional) - The retention period for logs of the Lambda function and custom resource. Defaults to one week (`RetentionDays.ONE_WEEK`) if not specified.
 ## Prerequisite
 
 ### Create KMS Key for the Secret

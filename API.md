@@ -149,6 +149,7 @@ const encryptedSecretProps: EncryptedSecretProps = { ... }
 | <code><a href="#cdk-encrypted-secret.EncryptedSecretProps.property.ciphertextBlob">ciphertextBlob</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-encrypted-secret.EncryptedSecretProps.property.keyId">keyId</a></code> | <code>string</code> | *No description.* |
 | <code><a href="#cdk-encrypted-secret.EncryptedSecretProps.property.existingSecretObj">existingSecretObj</a></code> | <code>aws-cdk-lib.aws_secretsmanager.Secret</code> | *No description.* |
+| <code><a href="#cdk-encrypted-secret.EncryptedSecretProps.property.logRetentionDays">logRetentionDays</a></code> | <code>aws-cdk-lib.aws_logs.RetentionDays</code> | *No description.* |
 | <code><a href="#cdk-encrypted-secret.EncryptedSecretProps.property.secretProps">secretProps</a></code> | <code>aws-cdk-lib.aws_secretsmanager.SecretProps</code> | *No description.* |
 
 ---
@@ -180,6 +181,16 @@ public readonly existingSecretObj: Secret;
 ```
 
 - *Type:* aws-cdk-lib.aws_secretsmanager.Secret
+
+---
+
+##### `logRetentionDays`<sup>Optional</sup> <a name="logRetentionDays" id="cdk-encrypted-secret.EncryptedSecretProps.property.logRetentionDays"></a>
+
+```typescript
+public readonly logRetentionDays: RetentionDays;
+```
+
+- *Type:* aws-cdk-lib.aws_logs.RetentionDays
 
 ---
 
