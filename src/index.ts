@@ -63,7 +63,7 @@ export class EncryptedSecret extends Construct {
     const decryptSecretFunction = new SingletonFunction(this, 'DecryptSecretFunction', {
       lambdaPurpose: 'DecryptSecret',
       uuid: crypto.createHash('md5').update(Stack.of(this).stackName).digest('hex'),
-      runtime: Runtime.NODEJS_20_X,
+      runtime: Runtime.NODEJS_22_X,
       architecture: Architecture.ARM_64,
       code: Code.fromAsset(path.join(__dirname, 'lambda')),
       handler: 'index.handler',
