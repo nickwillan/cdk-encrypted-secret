@@ -1,6 +1,7 @@
 import { Stack } from 'aws-cdk-lib';
 import { Template } from 'aws-cdk-lib/assertions';
 import { Key } from 'aws-cdk-lib/aws-kms';
+import { RetentionDays } from 'aws-cdk-lib/aws-logs';
 import { Secret } from 'aws-cdk-lib/aws-secretsmanager';
 import { EncryptedSecret } from '../src/index';
 
@@ -94,6 +95,9 @@ it('create a EncryptedSecret with minimal required properties', () => {
 
   // THEN
   Template.fromStack(stack).hasResourceProperties('Custom::AWS', {});
+  Template.fromStack(stack).hasResourceProperties('AWS::Logs::LogGroup', {
+    RetentionInDays: 7,
+  });
 });
 
 it('create a EncryptedSecret with all optional properties', () => {
@@ -109,9 +113,13 @@ it('create a EncryptedSecret with all optional properties', () => {
         generateStringKey: 'password',
       },
     },
+    logRetentionDays: RetentionDays.TWO_WEEKS,
   });
 
   // THEN
   Template.fromStack(stack).hasResourceProperties('Custom::AWS', {});
   Template.fromStack(stack).hasResourceProperties('AWS::SecretsManager::Secret', { Description: 'ABCD' });
+  Template.fromStack(stack).hasResourceProperties('AWS::Logs::LogGroup', {
+    RetentionInDays: 14,
+  });
 });
