@@ -48,7 +48,6 @@ target/
 .project
 .idea
 .settings
-.vscode/
 *.iml
 /test-reports/
 junit.xml
