@@ -37,7 +37,7 @@
   "devDependencies": {
     "@stylistic/eslint-plugin": "^2",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.15.2",
+    "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
     "aws-cdk-lib": "2.177.0",
@@ -54,7 +54,7 @@
     "jsii-docgen": "^10.5.0",
     "jsii-pacmak": "^1.111.0",
     "jsii-rosetta": "5.8.x",
-    "projen": "^0.91.26",
+    "projen": "^0.91.29",
     "ts-jest": "^29.3.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
@@ -64,8 +64,8 @@
     "constructs": "^10.4.2"
   },
   "dependencies": {
-    "@aws-sdk/client-kms": "^3.797.0",
-    "@aws-sdk/client-secrets-manager": "^3.797.0",
+    "@aws-sdk/client-kms": "^3.799.0",
+    "@aws-sdk/client-secrets-manager": "^3.799.0",
     "@aws-sdk/util-arn-parser": "^3.723.0"
   },
   "bundledDependencies": [
