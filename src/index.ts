@@ -65,7 +65,7 @@ export class EncryptedSecret extends Construct {
     // Create the Lambda Function to decrypt the ciphertext and store the value in the Secret
     const decryptSecretFunction = new SingletonFunction(this, 'DecryptSecretFunction', {
       lambdaPurpose: 'DecryptSecret',
-      uuid: crypto.createHash('md5').update(Stack.of(this).stackName).digest('hex'),
+      uuid: crypto.createHash('md5').update(Stack.of(this).environment).digest('hex'),
       runtime: Runtime.NODEJS_22_X,
       architecture: Architecture.ARM_64,
       code: Code.fromAsset(path.join(__dirname, 'lambda')),
