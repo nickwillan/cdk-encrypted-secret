@@ -6,10 +6,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
   description:
     'CDK Construct that creates an AWS Secret Manager Secret and sets the value from an encrypted Ciphertext.',
   majorVersion: 1,
-  cdkVersion: '2.177.0',
+  cdkVersion: '2.219.0',
   constructsVersion: '10.4.2',
   defaultReleaseBranch: 'main',
-  jsiiVersion: '5.8.x',
+  jsiiVersion: '5.9.x',
   name: 'cdk-encrypted-secret',
   projenrcTs: true,
   repositoryUrl: 'https://github.com/nickwillan/cdk-encrypted-secret.git',
