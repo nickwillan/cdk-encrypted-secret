@@ -111,6 +111,7 @@ export class EncryptedSecret extends Construct {
 
     // Create the custom resource
     const lambdaInvokeAwsCustomResource = new AwsCustomResource(this, 'CustomResourceSecretLambdaInvoke', {
+      installLatestAwsSdk: false,
       onCreate: {
         service: 'Lambda',
         action: 'invoke',

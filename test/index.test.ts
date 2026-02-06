@@ -86,6 +86,19 @@ it('Fails when cipherText is not provided', () => {
   }).toThrow(Error);
 });
 
+it('sets installLatestAwsSdk to false on the custom resource', () => {
+  // WHEN
+  new EncryptedSecret(stack, 'MyConstruct', {
+    ciphertextBlob: 'foobar',
+    keyId: 'arn:aws:kms:us-west-2:012345678901:key/483291fd-92ad-4dde-af8b-e4203b013258',
+  });
+
+  // THEN
+  Template.fromStack(stack).hasResourceProperties('Custom::AWS', {
+    InstallLatestAwsSdk: false,
+  });
+});
+
 it('create a EncryptedSecret with minimal required properties', () => {
   // WHEN
   new EncryptedSecret(stack, 'MyConstruct', {
